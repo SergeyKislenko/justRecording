@@ -1,0 +1,37 @@
+plugins {
+    id 'idea'
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+    id 'com.github.johnrengelman.shadow' version '5.2.0' apply false
+}
+
+idea {
+    project {
+        languageLevel = 13
+    }
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
+allprojects {
+    group "com.recording"
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: "io.spring.dependency-management"
+    dependencyManagement {
+        dependencies {
+            imports {
+                mavenBom("org.springframework.boot:spring-boot-dependencies:2.3.1.RELEASE")
+            }
+            dependency("com.h2database:h2:1.4.197")
+            dependency("org.hibernate:hibernate-core:5.4.18.Final")
+            dependency("org.projectlombok:lombok:1.18.12")
+            dependency("org.springframework.security:spring-security-taglibs:5.3.4.RELEASE")
+            dependency("org.springframework.boot:spring-boot-starter-security:2.3.3.RELEASE")
+        }
+    }
+}
