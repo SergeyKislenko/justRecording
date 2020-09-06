@@ -1,6 +1,6 @@
 package com.recording.configurations;
 
-import com.recording.core.service.DbServiceUserImpl;
+import com.recording.core.service.impl.DbServiceUserImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -30,11 +30,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/**").hasRole("ADMIN")
                 .antMatchers("/**").authenticated()
-                .antMatchers("/", "/resources/**").permitAll()
+                .antMatchers("/static/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/")
+                .defaultSuccessUrl("/orders")
                 .permitAll()
                 .and()
                 .logout()

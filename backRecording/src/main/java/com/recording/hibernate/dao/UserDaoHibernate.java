@@ -2,7 +2,7 @@ package com.recording.hibernate.dao;
 
 
 import com.recording.core.dao.UserDao;
-import com.recording.core.dao.UserDaoException;
+import com.recording.core.exception.UserDaoException;
 import com.recording.core.model.User;
 import com.recording.hibernate.sessionmanager.DatabaseSessionHibernate;
 import com.recording.hibernate.sessionmanager.SessionManager;

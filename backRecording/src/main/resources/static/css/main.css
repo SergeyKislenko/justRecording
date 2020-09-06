@@ -1,0 +1,154 @@
+html,
+body {
+    padding: 0px;
+    margin: 0px;
+    font-family: "Gudea", "Helvetica Neue", "HelveticaNeue-Light", Helvetica, Arial, sans-serif;
+}
+
+#wrapctr {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background: #FFF;
+    margin: 0 auto;
+    min-height: 1000px;
+    position: relative;
+    z-index: 2;
+}
+
+#leftmenu {
+    background: #101823;
+    width: 4%;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 100%;
+    list-style: none;
+}
+
+#content {
+    background: #F6FAFB;
+    position: absolute;
+    height: 96%;
+    left: 4%;
+    top: 4%;
+    right: 0px;
+    bottom: 0px;
+    width: 96%;
+}
+
+#header {
+    background: white;
+    position: absolute;
+    height: 4%;
+    left: 4%;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    width: 96%;
+}
+
+.menu_item {
+    width: 100%;
+    height: 4%;
+    margin-left: 20%;
+    margin-bottom: 30%;
+}
+
+a.orders {
+    background: url(../img/menu.png);
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    margin-left:1%;
+}
+
+a.orders:hover {
+    background: url(../img/menu_1.png);
+}
+
+a.create-orders {
+    background: url(../img/create.png);
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    margin-left:1%;
+}
+
+a.create-orders:hover {
+    background: url(../img/create_1.png);
+}
+a.create-user {
+    background: url(../img/add_user.png);
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    margin-left:1%;
+}
+
+a.create-user:hover {
+    background: url(../img/add_user_1.png);
+}
+
+a.settings {
+    background: url(../img/settings.png);
+    width: 38px;
+    height: 38px;
+    position: absolute;
+    margin-left:1%;
+}
+
+a.settings:hover {
+    background: url(../img/settings_1.png);
+}
+.line-header {
+    left: 1%;
+    top: 0%;
+    bottom: 0px;
+    width: 98%;
+    height: 5%;
+    position: relative;
+}
+
+.table-header{
+    background: #e7eaea;
+}
+
+.table-line {
+    background: #e7eaea;
+}
+.table-line:hover {
+    background: #d2d2d2;
+}
+
+.label-order {
+    font-weight: bold;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.text-order {
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.context-header {
+    width: 30%;
+    position: absolute;
+    left: 1%;
+    top: 20%;
+    height: 100%;
+    list-style: none;
+    font-size: 1.6em;
+}
+
+.user {
+    width: 3%;
+    position: absolute;
+    right: 0px;
+    top: 30%;
+    height: 100%;
+    list-style: none;
+}

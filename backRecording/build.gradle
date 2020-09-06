@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'org.springframework.boot' version '2.3.3.RELEASE'
 }
 
 sourceCompatibility = JavaVersion.VERSION_13
@@ -11,6 +12,12 @@ dependencies {
     implementation("org.hibernate:hibernate-core")
     implementation("org.springframework.security:spring-security-taglibs")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework:spring-context")
+    implementation("org.springframework:spring-context-support")
+    implementation("org.springframework:spring-webmvc")
+    implementation("org.springframework:spring-web")
+    implementation("org.thymeleaf:thymeleaf")
+    implementation("org.thymeleaf:thymeleaf-spring5")
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

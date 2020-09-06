@@ -1,7 +1,9 @@
-package com.recording.core.service;
+package com.recording.core.service.impl;
 
 import com.recording.core.dao.UserDao;
+import com.recording.core.exception.DbServiceException;
 import com.recording.core.model.User;
+import com.recording.core.service.DBServiceUser;
 import com.recording.hibernate.sessionmanager.SessionManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
