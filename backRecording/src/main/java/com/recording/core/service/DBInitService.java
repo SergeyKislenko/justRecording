@@ -1,5 +1,5 @@
 package com.recording.core.service;
 
-public interface DBInitServise {
+public interface DBInitService {
     void initDb();
 }

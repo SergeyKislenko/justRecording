@@ -4,18 +4,18 @@ import com.recording.core.model.Order;
 import com.recording.core.model.OrderStatus;
 import com.recording.core.model.Role;
 import com.recording.core.model.User;
-import com.recording.core.service.DBInitServise;
+import com.recording.core.service.DBInitService;
 import com.recording.core.service.DBServiceOrder;
 import com.recording.core.service.DBServiceUser;
 
 import java.util.Collections;
 import java.util.Date;
 
-public class DbInitServiseImpl implements DBInitServise {
+public class DbInitServiceImpl implements DBInitService {
     private final DBServiceUser userService;
     private final DBServiceOrder orderService;
 
-    public DbInitServiseImpl(DBServiceUser dbServiceUser, DBServiceOrder orderService) {
+    public DbInitServiceImpl(DBServiceUser dbServiceUser, DBServiceOrder orderService) {
         this.userService = dbServiceUser;
         this.orderService = orderService;
     }
