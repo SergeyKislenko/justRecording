@@ -64,6 +64,32 @@ public class OrderDaoHibernate implements OrderDao {
     }
 
     @Override
+    public Optional<Order> findById(long id) {
+        DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
+        try {
+            CriteriaBuilder cb = currentSession.getHibernateSession().getCriteriaBuilder();
+            CriteriaQuery<Order> cq = cb.createQuery(Order.class);
+            Root<Order> model = cq.from(Order.class);
+            cq.where(cb.equal(model.get("id"), id));
+            TypedQuery<Order> q = currentSession.getHibernateSession().createQuery(cq);
+            return Optional.of(q.getSingleResult());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public void changeOrderStatus(long id, String status) {
+        Optional<Order> optOrder = findById(id);
+        if (optOrder.isPresent()){
+            Order order = optOrder.get();
+            order.setStatus(status);
+            insertOrUpdate(order);
+        }
+    }
+
+    @Override
     public SessionManager getSessionManager() {
         return sessionManager;
     }

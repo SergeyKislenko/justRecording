@@ -3,20 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <title>Just recording</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 </head>
+<script type="text/javascript" th:inline="javascript">
+    $( document ).ready(function() {
+        $.get(
+            '/getDayForSlot',
+            function (data) {
+                var select = document.getElementById('day');
+                $(select).append('<option value=\'\' selected hidden>Выберите дату</option>');
+                for (var i = 0; i < data.length; i++) {
+                    $(select).append('<option value=' + data[i] + '>' + data[i] + '</option>');
+                }
+            }
+        );
+    });
+
+    function showSlots(day) {
+        $.get(
+            '/getSlot?day=' + day,
+            function (data) {
+                var select = document.getElementById('availableSlot');
+                cleanSelect(select);
+                for (var i = 0; i < data.length; i++) {
+                    $(select).append('<option value=' + data[i].id + '>' + data[i].startPeriod + '-' + data[i].endPeriod + '</option>');
+                }
+            }
+        );
+    }
+
+    function cleanSelect(select) {
+        var length = select.options.length;
+        for (i = length - 1; i >= 0; i--) {
+            select.options[i] = null;
+        }
+        $(select).append('<option value=\'\' selected hidden>Выберите время</option>');
+    }
+
+    function createOrder() {
+        var day = document.getElementById("day");
+        var dayValue = day.options[day.selectedIndex].value;
+        var availableSlot = document.getElementById("availableSlot");
+        var availableSlotText = availableSlot.options[availableSlot.selectedIndex].text.split('-');
+        var startPeriod = availableSlotText[0];
+        var endPeriod = availableSlotText[1];
+        var id = availableSlot.options[availableSlot.selectedIndex].value;
+
+        const order = {slotId:id, day: dayValue, startPeriod: startPeriod, endPeriod: endPeriod}
+        fetch('/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(order)
+        })
+            .then(alert("Заявка создана"))
+            .then(response => {
+                if (response.redirected) {
+                    window.location.href = "/orders";
+                }
+            });
+
+    }
+</script>
 <body>
 <div id="wrapctr">
     <div id="leftmenu">
         <div class="menu_item"></div>
         <div class="menu_item"><a href="/orders" title="Все бронировая" class="orders"> </a></div>
-        <div class="menu_item"><a href="/createOrder" title="Создать бронирование" class="create-orders"> </a></div>
-        <div class="menu_item"><a href="/createUser" title="Создать пользователя" class="create-user"> </a></div>
+        <div class="menu_item"><a href="/users" title="Создать пользователя" class="create-user"> </a></div>
         <div class="menu_item"><a href="/settings" title="Настройки" class="settings"> </a></div>
     </div>
-    <div id="header"><div class="context-header">Создать бронирование </div><div class="user"><a href="/logout">Выйти</a></div></div>
-    <div id="content"></div>
+    <div id="header">
+        <div class="context-header">Создать бронирование</div>
+        <div class="user"><a href="/logout">Выйти</a></div>
+    </div>
+    <div id="content">
+        <div class="line-box">
+            <table colspan="13" align="left" width="70%">
+                <tbody>
+                <form id="save-settings" th:object="${days}" th:method="post"
+                      accept-charset="utf-8">
+                    <tr>
+                        <td colspan="2">
+                            <label>Выберите время для записи<br/>
+                                <select id="day" class="day"
+                                        onChange="showSlots(this.options[this.selectedIndex].value)">
+                                </select>
+                            </label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>Выберите время для записи<br/>
+                                <select id="availableSlot" class="availableSlot">
+                                    <option value='' selected hidden>Выберите время</option>
+                                </select>
+                            </label>
+                        </td>
+                    </tr>
+                </form>
+                <tr>
+                    <td>
+                        <button type="submit" onclick="createOrder()" form="save-settings">Сохранить</button>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 </div>
 </body>
 </html>

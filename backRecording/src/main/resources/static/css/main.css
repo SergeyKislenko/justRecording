@@ -29,9 +29,9 @@ body {
 #content {
     background: #F6FAFB;
     position: absolute;
-    height: 96%;
+    height: 94%;
     left: 4%;
-    top: 4%;
+    top: 6%;
     right: 0px;
     bottom: 0px;
     width: 96%;
@@ -40,7 +40,7 @@ body {
 #header {
     background: white;
     position: absolute;
-    height: 4%;
+    height: 6%;
     left: 4%;
     top: 0px;
     right: 0px;
@@ -67,17 +67,6 @@ a.orders:hover {
     background: url(../img/menu_1.png);
 }
 
-a.create-orders {
-    background: url(../img/create.png);
-    width: 38px;
-    height: 38px;
-    position: absolute;
-    margin-left:1%;
-}
-
-a.create-orders:hover {
-    background: url(../img/create_1.png);
-}
 a.create-user {
     background: url(../img/add_user.png);
     width: 38px;
@@ -110,15 +99,43 @@ a.settings:hover {
     position: relative;
 }
 
+.line-box {
+    left: 1%;
+    top: 5%;
+    bottom: 0px;
+    width: 98%;
+    height: 5%;
+    position: relative;
+}
+
+input[type=text] {
+    width: 50%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+button {
+    background-color: #555555;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #101823;
+    color: white;
+}
 .table-header{
     background: #e7eaea;
 }
 
 .table-line {
     background: #e7eaea;
-}
-.table-line:hover {
-    background: #d2d2d2;
 }
 
 .label-order {
@@ -151,4 +168,104 @@ a.settings:hover {
     top: 30%;
     height: 100%;
     list-style: none;
+}
+
+a.create {
+    background: url(../img/main_create.png);
+    width: 64px;
+    height: 64px;
+    position: absolute;
+    margin-left:70%;
+}
+
+a.create:hover {
+    background: url(../img/main_create_1.png);
+}
+
+a.orderDone {
+    background: url(../img/done.png);
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-top: -25px;
+    margin-left: -65px;
+}
+
+a.orderDone:hover {
+    background: url(../img/done_1.png);
+}
+
+a.cancel {
+    background: url(../img/cancel.png);
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    margin-top: -25px;
+    margin-left: -45px;
+}
+
+a.cancel:hover {
+    background: url(../img/cancel_1.png);
+}
+
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+.container:hover input ~ .checkmark {
+    background-color: #555555;
+}
+
+.container input:checked ~ .checkmark {
+    background-color: #101823;
+}
+
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+.container .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+
+select {
+    width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
 }

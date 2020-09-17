@@ -6,25 +6,24 @@ import com.recording.core.serializers.DateToTimeStringSerializer;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.Date;
 
 @Entity
-@Table(name = "orders")
+@Table(name = "available_slot")
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Order implements Serializable {
+public class AvailableSlot {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private long id;
 
-    @Column(name = "slot_id")
-    private long slotId;
+    @Column(name = "user_id")
+    private long userId;
 
     @Column(name = "day")
     @Temporal(TemporalType.DATE)
@@ -42,6 +41,9 @@ public class Order implements Serializable {
     @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="HH:mm", timezone="GMT+3")
     private Date endPeriod;
 
-    @Column(name = "status")
-    private String status;
+    @Column(name = "active")
+    private boolean active;
+
+    @Column(name = "reserved")
+    private boolean reserved;
 }

@@ -3,20 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <title>Just recording</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <script th:inline="javascript">
+        function refreshSettings() {
+            const nameValue = document.getElementById('NAME_ORG').value;
+            const stepValue = document.getElementById('STEP').value;
+            const dayValue = document.getElementById('NEXT_DAY').value;
+            const startValue = document.getElementById('START_WORK').value;
+            const endValue = document.getElementById('END_WORK').value;
+            const settings = [{name: 'NAME_ORG', value: nameValue}, {name: 'STEP', value:stepValue}, {name: 'NEXT_DAY', value:dayValue}, {name: 'START_WORK', value:startValue}, {name: 'END_WORK', value:endValue}]
+            fetch('/settings/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(settings)})
+                .then(alert("Настройки обновлены"))
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = "/orders";
+                    }
+                });
+
+        }
+    </script>
 </head>
 <body>
 <div id="wrapctr">
     <div id="leftmenu">
         <div class="menu_item"></div>
         <div class="menu_item"><a href="/orders" title="Все бронировая" class="orders"> </a></div>
-        <div class="menu_item"><a href="/createOrder" title="Создать бронирование" class="create-orders"> </a></div>
-        <div class="menu_item"><a href="/createUser" title="Создать пользователя" class="create-user"> </a></div>
+        <div class="menu_item"><a href="/users" title="Создать пользователя" class="create-user"> </a></div>
         <div class="menu_item"><a href="/settings" title="Настройки" class="settings"> </a></div>
     </div>
-    <div id="header"><div class="context-header">Настройки </div><div class="user"><a href="/logout">Выйти</a></div></div>
-    <div id="content"></div>
+    <div id="header">
+        <div class="context-header">Настройки</div>
+        <div class="user"><a href="/logout">Выйти</a></div>
+    </div>
+    <div id="content">
+        <div class="line-box">
+            <table colspan="13" align="left" width="70%">
+                <tbody>
+                <form id="save-settings" th:object="${settings}" th:method="post"
+                      accept-charset="utf-8">
+                    <tr th:each="setting : ${settings}">
+                        <td colspan="2" th:switch="${setting.name}">
+                            <label th:case="'NAME_ORG'">Укажите наименование организации<br/>
+                                <input type="text"
+                                       th:value="${setting.value}"
+                                       th:id="${setting.name}"
+                                       th:name="${setting.name}"/></label>
+                            <label th:case="'STEP'">Укажите продолжительность одного приема<br/>
+                                <input type="text"
+                                       th:value="${setting.value}"
+                                       th:id="${setting.name}"
+                                       th:name="${setting.name}"/></label>
+                            <label th:case="'NEXT_DAY'">Укажите на сколько дней вперед заполнять расписание<br/>
+                                <input
+                                        type="text" th:value="${setting.value}" th:id="${setting.name}"
+                                        th:name="${setting.name}"/></label>
+                            <label th:case="'START_WORK'">Укажите время начала рабочего дня<br/>
+                                <input
+                                        type="text" th:value="${setting.value}" th:id="${setting.name}"
+                                        th:name="${setting.name}"/></label>
+                            <label th:case="'END_WORK'">Укажите время окончания рабочего дня<br/>
+                                <input
+                                        type="text" th:value="${setting.value}" th:id="${setting.name}"
+                                        th:name="${setting.name}"/></label>
+                        </td>
+                    </tr>
+
+                </form>
+                <tr><td>
+                    <button type="submit" onclick="refreshSettings()" form="save-settings">Сохранить</button>
+                </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

@@ -30,6 +30,9 @@ public class User implements Serializable, UserDetails {
     @Column(name = "password")
     private String password;
 
+    @Column(name = "email")
+    private String email;
+
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @Column(name = "roles")
     private Set<Role> roles;

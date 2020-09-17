@@ -11,5 +11,9 @@ public interface OrderDao {
 
     void insertOrUpdate(Order user);
 
+    Optional<Order> findById(long id);
+
+    void changeOrderStatus(long id, String status);
+
     SessionManager getSessionManager();
 }

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Just recording</title>
+    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+</head>
+<body>
+<div id="wrapctr">
+    <div id="leftmenu">
+        <div class="menu_item"></div>
+        <div class="menu_item"><a href="/orders" title="Все бронировая" class="orders"> </a></div>
+        <div class="menu_item"><a href="/users" title="Создать пользователя" class="create-user"> </a></div>
+        <div class="menu_item"><a href="/settings" title="Настройки" class="settings"> </a></div>
+    </div>
+    <div id="header"><div class="context-header">Все пользователи </div><div class="user"><a href="/logout">Выйти</a></div></div>
+    <div id="content">
+        <div class="line-header">
+            <table class="table-header" colspan="13" align="left" width="70%">
+                <tbody>
+                <tr>
+                    <td colspan="1"><p class="label-order">#</p></td>
+                    <td colspan="2"><p class="label-order">Имя пользователя</p></td>
+                    <td colspan="2"><p class="label-order">Электронная почта</p></td>
+                    <td colspan="5"><p class="label-order">Роль</p></td>
+                </tr>
+                <tr th:each="user : ${users}" class="table-line">
+                    <td colspan="1"><p class="text-order" th:text="${user.id}">1</p></td>
+                    <td colspan="2"><p class="text-order" th:text="${user.username}">Вася</p></td>
+                    <td colspan="5"><p class="text-order" th:text="${user.email}">test@test.rt</p></td>
+                    <td colspan="5" th:each="role : ${user.roles}"><p class="text-order" th:text="${role.name}">ADMIN</p></td>
+                </tr>
+                <tr>
+                <tr th:switch="${isAdmin}"> <a th:case="true" href="/createUser" title="Создать пользователя" class="create"></a></tr>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</body>
+</html>

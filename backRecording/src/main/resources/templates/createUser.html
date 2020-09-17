@@ -3,20 +3,104 @@
 <head>
     <meta charset="UTF-8">
     <title>Just recording</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css" />
+    <link rel="stylesheet" href="css/main.css" type="text/css"/>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
+    <script th:inline="javascript">
+        function createUser() {
+            const username = document.getElementById('username').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const role = Array.from(document.getElementsByName("role")).find(r => r.checked).value;
+            ;
+            const user = {username: username, email: email, password: password, "roles": [{name: role}]}
+            fetch('/user/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user)
+            })
+                .then(alert("Пользователь создан"))
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = "/orders";
+                    }
+                });
+
+        }
+    </script>
 </head>
 <body>
 <div id="wrapctr">
     <div id="leftmenu">
         <div class="menu_item"></div>
         <div class="menu_item"><a href="/orders" title="Все бронировая" class="orders"> </a></div>
-        <div class="menu_item"><a href="/createOrder" title="Создать бронирование" class="create-orders"> </a></div>
-        <div class="menu_item"><a href="/createUser" title="Создать пользователя" class="create-user"> </a></div>
+        <div class="menu_item"><a href="/users" title="Создать пользователя" class="create-user"> </a></div>
         <div class="menu_item"><a href="/settings" title="Настройки" class="settings"> </a></div>
     </div>
-    <div id="header"><div class="context-header">Создать пользователя </div><div class="user"><a href="/logout">Выйти</a></div></div>
-    <div id="content"></div>
+    <div id="header">
+        <div class="context-header">Создание пользователя</div>
+        <div class="user"><a href="/logout">Выйти</a></div>
+    </div>
+    <div id="content">
+        <div class="line-box">
+            <table colspan="13" align="left" width="70%">
+                <tbody>
+                <form id="save-user" th:object="${user}" th:method="post"
+                      accept-charset="utf-8">
+                    <tr>
+                        <td colspan="2">
+                            <label>Укажите логин пользователя<br/>
+                                <input type="text"
+                                       id="username"
+                                       name="username"
+                                       required/></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>Укажите адрес электронной почты<br/>
+                                <input type="text"
+                                       id="email"
+                                       name="email"
+                                       required/></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>Укажите пароль пользователя<br/>
+                                <input type="text"
+                                       id="password"
+                                       name="password"
+                                       required/></label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <label>Укажите роль пользователя<br/><br/>
+                                <label class="container">Пользователь
+                                    <input type="radio" checked="checked" name="role" value="USER">
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="container">Администратор
+                                    <input type="radio" name="role" value="ADMIN">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </label>
+                        </td>
+                    </tr>
+                </form>
+                <tr>
+                    <td>
+                        <button type="submit" onclick="createUser()" form="save-user">Сохранить</button>
+                    </td>
+                </tr>
+
+                </tbody>
+
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 </html>

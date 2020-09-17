@@ -11,8 +11,7 @@
     <div id="leftmenu">
         <div class="menu_item"></div>
         <div class="menu_item"><a href="/orders" title="Все бронировая" class="orders"> </a></div>
-        <div class="menu_item"><a href="/createOrder" title="Создать бронирование" class="create-orders"> </a></div>
-        <div class="menu_item"><a href="/createUser" title="Создать пользователя" class="create-user"> </a></div>
+        <div class="menu_item"><a href="/users" title="Создать пользователя" class="create-user"> </a></div>
         <div class="menu_item"><a href="/settings" title="Настройки" class="settings"> </a></div>
     </div>
     <div id="header"><div class="context-header">Все бронирования </div><div class="user"><a href="/logout">Выйти</a></div></div>
@@ -23,14 +22,25 @@
                 <tr>
                     <td colspan="1"><p class="label-order">#</p></td>
                     <td colspan="2"><p class="label-order">Статус</p></td>
+                    <td colspan="5"><p class="label-order">Дата</p></td>
                     <td colspan="5"><p class="label-order">Начало</p></td>
                     <td colspan="5"><p class="label-order">Конец</p></td>
+                    <td colspan="1"><p class="label-order"></p></td>
                 </tr>
                 <tr th:each="order : ${orders}" class="table-line">
                     <td colspan="1"><p class="text-order" th:text="${order.id}">1</p></td>
-                    <td colspan="2"><p class="text-order" th:text="${order.status}">Забронировано</p></td>
+                    <td colspan="2">
+                        <p class="text-order" th:if="${order.status == 'CONFIRMED'}">Зарегистрирована</p>
+                        <p class="text-order" th:if="${order.status == 'CANCEL'}">Отменено</p>
+                        <p class="text-order" th:if="${order.status == 'DONE'}">Завершено</p>
+                    </td>
+                    <td colspan="5"><p class="text-order" th:text="${order.day}">Забронировано</p></td>
                     <td colspan="5"><p class="text-order" th:text="${order.startPeriod}">14-00</p></td>
                     <td colspan="5"><p class="text-order" th:text="${order.endPeriod}">15-00</p></td>
+                    <td colspan="1"><p class="text-order"><a th:href="@{/orderDone(id=${order.id})}" title="Завершено" class="orderDone"></a></p></td>
+                    <td colspan="1"><p class="text-order"><a th:href="@{/orderCancel(id=${order.id})}" title="Отмена" class="cancel"></a></p></td>
+                </tr>
+                <tr> <a href="/createOrder" title="Создать бронирование" class="create"></a></tr>
                 </tr>
                 </tbody>
             </table>

@@ -55,4 +55,20 @@ public class DBServiceOrderImpl implements DBServiceOrder {
             }
         }
     }
+
+    @Override
+    public void changeOrderStatus(long orderId, String status) {
+        try (SessionManager sessionManager = orderDao.getSessionManager()) {
+            sessionManager.beginSession();
+            try {
+                orderDao.changeOrderStatus(orderId, status);
+                sessionManager.commitSession();
+                logger.info("status chanced: {}", orderId);
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+                sessionManager.rollbackSession();
+                throw new DbServiceException(e);
+            }
+        }
+    }
 }

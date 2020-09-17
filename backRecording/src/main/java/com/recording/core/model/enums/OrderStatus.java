@@ -1,8 +1,9 @@
-package com.recording.core.model;
+package com.recording.core.model.enums;
 
 public enum OrderStatus {
     REGISTRATION("Зарегистрирована", "CONFIRMED"),
-    CANCEL("Отменено", "CANCEL");
+    CANCEL("Отменено", "CANCEL"),
+    DONE("Завершнено", "DONE");
 
     private final String description;
     private final String code;
