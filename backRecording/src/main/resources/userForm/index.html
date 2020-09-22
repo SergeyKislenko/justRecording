@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Just recording</title>
+    <link rel="stylesheet" href="userStyle.css" type="text/css"/>
+    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
+</head>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $.get(
+            'http://localhost:8080/api/getDayForSlot',
+            function (data) {
+                var div = document.getElementById('content-day');
+                for (var i = 0; i < data.length; i++) {
+                    $(div).append(' <button type="submit" onclick="showSlots(\''+  data[i] + '\')" form="save-settings">' + data[i] + '</button>');
+                }
+            }
+        );
+    });
+
+    function showSlots(day) {
+        $.get(
+            'http://localhost:8080/api/getSlot?day=' + day,
+            function (data) {
+                var div = document.getElementById('content-time');
+                var text = document.getElementById('time-text');
+                div.innerHTML = "";
+                for (var i = 0; i < data.length; i++) {
+                    $(div).append('<button type="submit" onclick="createOrder(' + data[i].id + ')" form="save-settings">' + data[i].startPeriod + '-' + data[i].endPeriod + '</button>');
+                }
+                text.style.display = "block";
+            }
+        );
+
+    }
+
+    function createOrder(slotId) {
+        const availableSlot = {id: slotId}
+        fetch('http://localhost:8080/api/book', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(availableSlot)
+        })
+            .then(alert("Заявка создана"))
+            .then(document.location.reload());
+    }
+</script>
+<body>
+<div id="wrapctr">
+
+    <div class="welcome"><p class="text">Добро пожаловать !!! <br/> Выберите дату на которую вы хотите записаться</p></div>
+    <div id="content-day">
+    </div>
+    <div id="time-text" class="welcome" style="display: none"><p class="text">А теперь самое время выбрать время на которое вы желаете записаться</p></div>
+    <div id="content-time">
+    </div>
+</div>
+</div>
+</body>
+</html>

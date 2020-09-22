@@ -1,10 +1,10 @@
 package com.recording.controllers;
 
+import com.recording.core.model.AvailableSlot;
 import com.recording.core.model.enums.OrderStatus;
 import com.recording.core.service.DBServiceOrder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import com.recording.core.utils.AvailableSlotUtil;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -12,9 +12,11 @@ import java.io.IOException;
 @RestController
 public class OrderController {
     private final DBServiceOrder orderService;
+    private final AvailableSlotUtil availableSlotUtil;
 
-    public OrderController(DBServiceOrder orderService) {
+    public OrderController(DBServiceOrder orderService, AvailableSlotUtil availableSlotUtil) {
         this.orderService = orderService;
+        this.availableSlotUtil = availableSlotUtil;
     }
 
     @GetMapping(path = "/orderDone")
@@ -29,5 +31,9 @@ public class OrderController {
         response.sendRedirect("/orders");
     }
 
-
+    @PostMapping(path = "/book")
+    public void getDayForSlot(@RequestBody AvailableSlot slot, HttpServletResponse response) throws IOException {
+        availableSlotUtil.createOrder(slot);
+        response.sendRedirect("/orders");
+    }
 }

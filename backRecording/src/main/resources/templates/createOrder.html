@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>Just recording</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css"/>
     <link rel="shortcut icon" href="img/favicon.ico" type="image/x-icon">
     <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
 </head>
 <script type="text/javascript" th:inline="javascript">
     $( document ).ready(function() {
         $.get(
-            '/getDayForSlot',
+            'api/getDayForSlot',
             function (data) {
                 var select = document.getElementById('day');
                 $(select).append('<option value=\'\' selected hidden>Выберите дату</option>');
@@ -23,7 +23,7 @@
 
     function showSlots(day) {
         $.get(
-            '/getSlot?day=' + day,
+            'api/getSlot?day=' + day,
             function (data) {
                 var select = document.getElementById('availableSlot');
                 cleanSelect(select);
@@ -43,21 +43,14 @@
     }
 
     function createOrder() {
-        var day = document.getElementById("day");
-        var dayValue = day.options[day.selectedIndex].value;
-        var availableSlot = document.getElementById("availableSlot");
-        var availableSlotText = availableSlot.options[availableSlot.selectedIndex].text.split('-');
-        var startPeriod = availableSlotText[0];
-        var endPeriod = availableSlotText[1];
-        var id = availableSlot.options[availableSlot.selectedIndex].value;
-
-        const order = {slotId:id, day: dayValue, startPeriod: startPeriod, endPeriod: endPeriod}
-        fetch('/book', {
+        var slotId = availableSlot.options[availableSlot.selectedIndex].value;
+        const slot = {id:slotId}
+        fetch('book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(order)
+            body: JSON.stringify(slot)
         })
             .then(alert("Заявка создана"))
             .then(response => {
@@ -89,7 +82,7 @@
                     <tr>
                         <td colspan="2">
                             <label>Выберите время для записи<br/>
-                                <select id="day" class="day"
+                                <select id="day" class="daySelect"
                                         onChange="showSlots(this.options[this.selectedIndex].value)">
                                 </select>
                             </label>
@@ -98,7 +91,7 @@
                     <tr>
                         <td colspan="2">
                             <label>Выберите время для записи<br/>
-                                <select id="availableSlot" class="availableSlot">
+                                    <select id="availableSlot" class="daySelect">
                                     <option value='' selected hidden>Выберите время</option>
                                 </select>
                             </label>

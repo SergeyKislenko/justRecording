@@ -63,6 +63,23 @@ public class AvailableSlotDaoHibernate implements AvailableSlotDao {
     }
 
     @Override
+    public Optional<List<AvailableSlot>> findAllActive() {
+        DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
+        try {
+            CriteriaBuilder cb = currentSession.getHibernateSession().getCriteriaBuilder();
+            CriteriaQuery<AvailableSlot> cq = cb.createQuery(AvailableSlot.class);
+            Root<AvailableSlot> rootEntry = cq.from(AvailableSlot.class);
+            cq.select(rootEntry);
+            cq.where(cb.equal(rootEntry.get("active"), true));
+            TypedQuery<AvailableSlot> allQuery = currentSession.getHibernateSession().createQuery(cq);
+            return Optional.of(allQuery.getResultList());
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+        }
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<AvailableSlot> findById(long id) {
         DatabaseSessionHibernate currentSession = sessionManager.getCurrentSession();
         try {

@@ -42,10 +42,17 @@ public class DateTransform {
         return calendar.getTime();
     }
 
-    public static Date getAddedHourCalendar(Date date, int day) {
+    public static Date getAddedHourCalendar(Date date, int hour) {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date == null ? new Date() : date);
-        calendar.add(Calendar.HOUR, day);
+        calendar.add(Calendar.HOUR, hour);
+        return calendar.getTime();
+    }
+
+    public static Date getMinusDayCalendar(Date date, int day) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date == null ? new Date() : date);
+        calendar.add(Calendar.DAY_OF_YEAR, day);
         return calendar.getTime();
     }
 

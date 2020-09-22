@@ -263,8 +263,15 @@ a.cancel:hover {
     background: white;
 }
 
-select {
+.daySelect {
     width: 30%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+}
+
+.timeSelect {
+    width: 20%;
     padding: 12px 20px;
     margin: 8px 0;
     box-sizing: border-box;

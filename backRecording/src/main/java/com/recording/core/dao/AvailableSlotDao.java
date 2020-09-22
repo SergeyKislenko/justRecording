@@ -12,6 +12,8 @@ public interface AvailableSlotDao {
 
     Optional<List<AvailableSlot>> findAllDay();
 
+    Optional<List<AvailableSlot>> findAllActive();
+
     Optional<AvailableSlot> findById(long id);
 
     void insertOrUpdate(AvailableSlot user);

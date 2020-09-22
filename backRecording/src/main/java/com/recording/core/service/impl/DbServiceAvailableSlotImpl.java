@@ -40,6 +40,22 @@ public class DbServiceAvailableSlotImpl implements DbServiceAvailableSlot {
     }
 
     @Override
+    public Optional<List<AvailableSlot>> findAllActive() {
+        try (SessionManager sessionManager = availableSlotDao.getSessionManager()) {
+            sessionManager.beginSession();
+            try {
+                Optional<List<AvailableSlot>> availableSlotOptional = availableSlotDao.findAllActive();
+                logger.info("availableSlot: {}", availableSlotOptional.orElse(null));
+                return availableSlotOptional;
+            } catch (Exception e) {
+                logger.error(e.getMessage(), e);
+                sessionManager.rollbackSession();
+            }
+            return Optional.empty();
+        }
+    }
+
+    @Override
     public Optional<AvailableSlot> findById(long id) {
         try (SessionManager sessionManager = availableSlotDao.getSessionManager()) {
             sessionManager.beginSession();

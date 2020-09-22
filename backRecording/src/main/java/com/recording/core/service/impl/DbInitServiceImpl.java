@@ -4,6 +4,7 @@ import com.recording.core.model.*;
 import com.recording.core.model.enums.OrderStatus;
 import com.recording.core.model.enums.SettingName;
 import com.recording.core.service.*;
+import com.recording.core.utils.AvailableSlotUtil;
 import com.recording.core.utils.DateTransform;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,14 @@ public class DbInitServiceImpl implements DBInitService {
     private final DBServiceOrder orderService;
     private final DBServiceSettings serviceSettings;
     private final DbServiceAvailableSlot serviceAvailableSlot;
+    private final AvailableSlotUtil availableSlotUtil;
 
-    public DbInitServiceImpl(DBServiceUser dbServiceUser, DBServiceOrder orderService, DBServiceSettings serviceSettings, DbServiceAvailableSlot serviceAvailableSlot) {
+    public DbInitServiceImpl(DBServiceUser dbServiceUser, DBServiceOrder orderService, DBServiceSettings serviceSettings, DbServiceAvailableSlot serviceAvailableSlot, AvailableSlotUtil availableSlotUtil) {
         this.userService = dbServiceUser;
         this.orderService = orderService;
         this.serviceSettings = serviceSettings;
         this.serviceAvailableSlot = serviceAvailableSlot;
+        this.availableSlotUtil = availableSlotUtil;
     }
 
     @Override
@@ -35,7 +38,7 @@ public class DbInitServiceImpl implements DBInitService {
                 createDefaultSettings(SettingName.NEXT_DAY.name(), "1", "1"),
                 createDefaultSettings(SettingName.START_WORK.name(), "8", "8"),
                 createDefaultSettings(SettingName.END_WORK.name(), "17", "17")));
-        createAvailableSlot();
+        availableSlotUtil.refreshSlots();
     }
 
     private User createUser(String userName, String userPassword, String userRole, String email) {
