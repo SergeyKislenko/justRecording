@@ -35,8 +35,8 @@ public class DbInitServiceImpl implements DBInitService {
         serviceSettings.saveSettings(Arrays.asList(
                 createDefaultSettings(SettingName.NAME_ORG.name(), "Тестовая организация", "Тестовая настоящая организация"),
                 createDefaultSettings(SettingName.STEP.name(), "60", "60"),
-                createDefaultSettings(SettingName.NEXT_DAY.name(), "4", "4"),
-                createDefaultSettings(SettingName.START_WORK.name(), "8", "8"),
+                createDefaultSettings(SettingName.NEXT_DAY.name(), "7", "7"),
+                createDefaultSettings(SettingName.START_WORK.name(), "9", "9"),
                 createDefaultSettings(SettingName.END_WORK.name(), "17", "17")));
         availableSlotUtil.refreshSlots();
     }
